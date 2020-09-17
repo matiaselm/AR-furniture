@@ -15,5 +15,5 @@ import com.google.ar.sceneform.ux.BaseArFragment
 import com.google.ar.sceneform.ux.TransformableNode
 
 class MainActivity : AppCompatActivity() {
-    
+
 }
