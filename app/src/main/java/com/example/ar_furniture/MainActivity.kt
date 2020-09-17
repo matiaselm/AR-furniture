@@ -15,36 +15,5 @@ import com.google.ar.sceneform.ux.BaseArFragment
 import com.google.ar.sceneform.ux.TransformableNode
 
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var fragment: ArFragment
-    private var testRenderable: ViewRenderable? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        fragment = supportFragmentManager.findFragmentById(R.id.sceneform_fragment) as ArFragment;
-
-        val renderableFuture = ViewRenderable.builder()
-            .setView(this, R.layout.rendtext)
-            .build()
-        renderableFuture.thenAccept {it -> testRenderable = it }
-
-
-        fragment.setOnTapArPlaneListener {hitResult: HitResult?, plane: Plane?, motionEvent: MotionEvent? ->
-            if (testRenderable == null) {
-                return@setOnTapArPlaneListener
-            }
-            val anchor = hitResult!!.createAnchor()
-            val anchorNode = AnchorNode(anchor)
-            anchorNode.setParent(fragment.arSceneView.scene)
-            val viewNode = TransformableNode(fragment.transformationSystem)
-            viewNode.setParent(anchorNode)
-            viewNode.renderable = testRenderable
-            viewNode.select()
-            viewNode.setOnTapListener{hitTestRes: HitTestResult?, motionEv: MotionEvent? ->
-                Toast.makeText(applicationContext, "Ouch!!!!", Toast.LENGTH_SHORT).show()
-            }
-
-        }
-    }
+    
 }
