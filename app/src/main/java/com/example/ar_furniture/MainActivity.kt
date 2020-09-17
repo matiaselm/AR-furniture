@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity(), onFurnitureSelected {
 
     override fun onFurnitureSelected(furniture: Furniture, position: Int) {
 
-        val intent = Intent(this, FurnitureArActivity)
+        val intent = Intent(this, FurnitureArActivity::class.java)
         val b = Bundle()
         b.putSerializable("furn", furniture)
         intent.putExtras(b)

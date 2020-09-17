@@ -42,6 +42,7 @@ class FurnitureArActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.fragment_ar)
 
         val b = this.intent.extras
         if (b != null) {
