@@ -14,6 +14,25 @@ import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.BaseArFragment
 import com.google.ar.sceneform.ux.TransformableNode
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), onFurnitureSelected {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        if (savedInstanceState == null) {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.container, FurnitureListFragment.newInstance())
+                .commit()
+        }
+    }
+
+    override fun onFurnitureSelected(furniture: Furniture, position: Int) {
+        val furnitureArFragment = FurnitureArFragment.newInstance(furniture)
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.container, furnitureArFragment, "furnitureinar")
+            .addToBackStack(null)
+            .commit()
+    }
 
 }
