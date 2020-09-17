@@ -18,12 +18,14 @@ class MainActivity : AppCompatActivity(), onFurnitureSelected {
     }
 
     override fun onFurnitureSelected(furniture: Furniture, position: Int) {
+
         val intent = Intent(this, FurnitureArActivity)
         val b = Bundle()
         b.putSerializable("furn", furniture)
         intent.putExtras(b)
         startActivity(intent)
         finish()
+
     }
 
 }
