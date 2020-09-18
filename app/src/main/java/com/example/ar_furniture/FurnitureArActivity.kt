@@ -1,10 +1,13 @@
 package com.example.ar_furniture
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.ar.core.HitResult
@@ -15,6 +18,7 @@ import com.google.ar.sceneform.assets.RenderableSource
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
+import kotlinx.android.synthetic.main.fragment_ar.*
 
 
 class FurnitureArActivity: AppCompatActivity() {
@@ -22,6 +26,7 @@ class FurnitureArActivity: AppCompatActivity() {
     private lateinit var arFragment: ArFragment
     private var testRenderable: ModelRenderable? = null
     private var currentContext: Context = this
+    private var colorArray = ArrayList<String>()
 
     private fun addObj(hitResult: HitResult, plane: Plane, motionEvent: MotionEvent) {
         if (testRenderable == null) {
@@ -40,9 +45,35 @@ class FurnitureArActivity: AppCompatActivity() {
         }
     }
 
+    private fun goBack(){
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun initSpinner(){
+        Log.d("spinner","initSpinner")
+        ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            colorArray
+        ).also{adapter ->
+            Log.d("spinner","adapter")
+            // Specify the layout
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            Log.d("spinner","adapter 2")
+            // Apply the adapter to the spinner
+            color_picker.adapter = adapter
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_ar)
+
+        colorArray.add("green")
+        colorArray.add("blue")
+        colorArray.add("red")
 
         val b = this.intent.extras
         if (b != null) {
@@ -78,6 +109,12 @@ class FurnitureArActivity: AppCompatActivity() {
         arFragment.setOnTapArPlaneListener { hitResult: HitResult, plane: Plane, motionEvent: MotionEvent ->
             addObj(hitResult, plane, motionEvent)
         }
+
+        back_button.setOnClickListener {
+            goBack()
+        }
+
+        initSpinner()
     }
 
 }
