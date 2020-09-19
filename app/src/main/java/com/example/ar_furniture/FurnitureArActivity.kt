@@ -22,14 +22,30 @@ import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
 import kotlinx.android.synthetic.main.fragment_ar.*
 
-
-class FurnitureArActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+// If spinner is activated later on, need to add: ", AdapterView.OnItemSelectedListener"
+class FurnitureArActivity : AppCompatActivity() {
     lateinit var furniture: Furniture
     private lateinit var arFragment: ArFragment
     private var testRenderable: ModelRenderable? = null
     private var currentContext: Context = this
     private var colorArray = ArrayList<String>()
     private var key = "musta"
+    private lateinit var listAdapter: CustomListAdapter
+
+    private fun initListView() {
+        colorArray.add("musta")
+        colorArray.add("valkoinen")
+
+        listAdapter = CustomListAdapter(this, colorArray)
+        color_picker_list.adapter = listAdapter
+
+        color_picker_list.setOnItemClickListener() { listAdapter, view, position, id ->
+            val key = listAdapter.getItemAtPosition(position).toString()
+            Log.d("spinner", "Selected item: $key")
+
+            renderModel(key)
+        }
+    }
 
     private fun addObj(hitResult: HitResult, plane: Plane, motionEvent: MotionEvent) {
         if (testRenderable == null) {
@@ -49,9 +65,9 @@ class FurnitureArActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
     }
 
     private fun removeNode(nodeToRemove: TransformableNode, motionEv: MotionEvent?) {
-        Log.d("spinner","MotionEvent: $motionEv")
+        Log.d("spinner", "MotionEvent: $motionEv")
 
-        when(remove_button.visibility){
+        when (remove_button.visibility) {
             View.VISIBLE -> remove_button.visibility = View.GONE
             View.GONE -> remove_button.visibility = View.VISIBLE
             else -> {
@@ -60,15 +76,12 @@ class FurnitureArActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         }
 
         //Remove a selected Node
-        remove_button.setOnClickListener{
+        remove_button.setOnClickListener {
             arFragment.getArSceneView().getScene().removeChild(nodeToRemove);
             nodeToRemove.setParent(null);
             nodeToRemove.renderable = null
             remove_button.visibility = View.GONE
         }
-
-        //Toast.makeText(currentContext, "Ouch!!!!", Toast.LENGTH_SHORT).show()
-
     }
 
     private fun goBack() {
@@ -77,6 +90,8 @@ class FurnitureArActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         finish()
     }
 
+    /** Spinner methods, translated these to ListView since couldn't get spinner to work properly */
+    /*
     private fun initSpinner() {
         Log.d("spinner", "initSpinner")
         ArrayAdapter(
@@ -94,18 +109,21 @@ class FurnitureArActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
 
         color_picker.onItemSelectedListener = this
     }
+    */
 
+    /*
     override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
         // An item was selected. You can retrieve the selected item using
         val key = parent.getItemAtPosition(pos).toString()
         Log.d("spinner", "Item selected: ${key}")
-        renderModel(key)
+
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) {
         // Another interface callback
         Log.d("spinner", "Nothing selected, ${parent}")
     }
+    */
 
     private fun renderModel(key: String) {
         // furniture.src[key] palauttaa tiedostonimen
@@ -138,8 +156,7 @@ class FurnitureArActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_ar)
 
-        colorArray.add("musta")
-        colorArray.add("valkoinen")
+        initListView()
 
         val b = this.intent.extras
         if (b != null) {
@@ -157,8 +174,6 @@ class FurnitureArActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         back_button.setOnClickListener {
             goBack()
         }
-
-        initSpinner()
     }
 
 }
