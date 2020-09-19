@@ -1,5 +1,6 @@
 package com.example.ar_furniture
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -41,6 +42,7 @@ class FurnitureArActivity : AppCompatActivity() {
         arFragment = supportFragmentManager.findFragmentById(R.id.furniture_fragment) as ArFragment
 
         initListView()
+        item_name.text = "Furniture: ${furniture.type}"
 
         arFragment.setOnTapArPlaneListener { hitResult: HitResult, plane: Plane, motionEvent: MotionEvent ->
             addObj(hitResult, plane, motionEvent)

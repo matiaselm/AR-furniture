@@ -10,12 +10,37 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <Spinner
-        android:id="@+id/color_picker"
-        android:layout_width="150dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
-        android:layout_margin="12dp" />
+        android:layout_margin="12dp">
+
+        <Button
+            android:id="@+id/back_button"
+            android:layout_weight="3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableStart="@drawable/abc_vector_test"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/blackGlass"
+            android:layout_margin="4dp"
+            android:contentDescription="@string/back_btn_desc"
+            android:text="@string/back_btn_content"
+            tools:ignore="PrivateResource" />
+
+        <TextView
+            android:id="@+id/item_name"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical|start"
+            android:textColor="@color/white"
+            android:layout_margin="4dp"
+            android:textSize="24sp"
+            android:text="@string/item_name"
+            />
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/color_picker_list"
@@ -26,26 +51,13 @@
         />
 
     <Button
-        android:id="@+id/back_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start|top"
-        android:drawableStart="@drawable/abc_vector_test"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/blackGlass"
-        android:layout_margin="12dp"
-        android:contentDescription="@string/back_btn_desc"
-        android:text="@string/back_btn_content"
-        tools:ignore="PrivateResource" />
-
-    <Button
         android:id="@+id/remove_button"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_gravity="center|bottom"
         android:layout_margin="16dp"
-        android:textSize="22dp"
+        android:textSize="22sp"
         android:textColor="#FFFFFF"
         android:backgroundTint="#99FF0000"
         android:contentDescription="@string/remove_btn_desc"

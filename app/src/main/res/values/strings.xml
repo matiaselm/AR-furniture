@@ -16,4 +16,7 @@
     <string name="remove_btn_content">remove</string>
     <string name="remove_btn_desc">delete model</string>
 
+    <string name="item_name">Furniture:</string>
+
+
 </resources>

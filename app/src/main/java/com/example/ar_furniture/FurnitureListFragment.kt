@@ -54,7 +54,6 @@ class FurnitureListFragment : Fragment() {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
-
         }
     }
 
