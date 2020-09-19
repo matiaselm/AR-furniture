@@ -1,6 +1,5 @@
 package com.example.ar_furniture
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -8,8 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.ar.core.HitResult
@@ -30,13 +27,9 @@ class FurnitureArActivity : AppCompatActivity() {
     private var currentContext: Context = this
     private var colorArray = ArrayList<String>()
     private var key = "musta"
-    private lateinit var listAdapter: CustomListAdapter
 
     private fun initListView() {
-        colorArray.add("musta")
-        colorArray.add("valkoinen")
-
-        listAdapter = CustomListAdapter(this, colorArray)
+        val listAdapter = CustomListAdapter(this, colorArray)
         color_picker_list.adapter = listAdapter
 
         color_picker_list.setOnItemClickListener() { listAdapter, view, position, id ->
@@ -44,6 +37,13 @@ class FurnitureArActivity : AppCompatActivity() {
             Log.d("spinner", "Selected item: $key")
 
             renderModel(key)
+        }
+    }
+
+    private fun initColorArray(furniture: Furniture){
+        val colorMap = furniture.src
+        for ((key, _) in colorMap){
+            colorArray.add(key)
         }
     }
 
@@ -60,11 +60,11 @@ class FurnitureArActivity : AppCompatActivity() {
         viewNode.renderable = testRenderable
         viewNode.select()
         viewNode.setOnTapListener { hitTestRes: HitTestResult?, motionEv: MotionEvent? ->
-            removeNode(viewNode, motionEv)
+            removeObj(viewNode, motionEv)
         }
     }
 
-    private fun removeNode(nodeToRemove: TransformableNode, motionEv: MotionEvent?) {
+    private fun removeObj(nodeToRemove: TransformableNode, motionEv: MotionEvent?) {
         Log.d("spinner", "MotionEvent: $motionEv")
 
         when (remove_button.visibility) {
@@ -156,16 +156,16 @@ class FurnitureArActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_ar)
 
-        initListView()
-
         val b = this.intent.extras
         if (b != null) {
             furniture = b.getSerializable("furn") as Furniture
+            initColorArray(furniture)
         }
 
         arFragment = supportFragmentManager.findFragmentById(R.id.furniture_fragment) as ArFragment
 
         renderModel(key)
+        initListView()
 
         arFragment.setOnTapArPlaneListener { hitResult: HitResult, plane: Plane, motionEvent: MotionEvent ->
             addObj(hitResult, plane, motionEvent)
