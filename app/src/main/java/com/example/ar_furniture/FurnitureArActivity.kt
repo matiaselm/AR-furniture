@@ -9,6 +9,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.ar_furniture.Tag.tag
 import com.google.ar.core.HitResult
 import com.google.ar.core.Plane
 import com.google.ar.sceneform.AnchorNode
@@ -26,7 +27,6 @@ class FurnitureArActivity : AppCompatActivity() {
     private var testRenderable: ModelRenderable? = null
     private var currentContext: Context = this
     private var colorArray = ArrayList<String>()
-    private var key = "musta"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +40,6 @@ class FurnitureArActivity : AppCompatActivity() {
 
         arFragment = supportFragmentManager.findFragmentById(R.id.furniture_fragment) as ArFragment
 
-        renderModel(key)
         initListView()
 
         arFragment.setOnTapArPlaneListener { hitResult: HitResult, plane: Plane, motionEvent: MotionEvent ->
@@ -58,8 +57,8 @@ class FurnitureArActivity : AppCompatActivity() {
 
         color_picker_list.setOnItemClickListener() { listAdapter, view, position, id ->
             val key = listAdapter.getItemAtPosition(position).toString()
-            Log.d("spinner", "Selected item: $key")
-
+            Log.d(tag, "Selected item: $key")
+            Toast.makeText(this, "$key selected", Toast.LENGTH_SHORT).show()
             renderModel(key)
         }
     }
@@ -73,7 +72,7 @@ class FurnitureArActivity : AppCompatActivity() {
 
     private fun addObj(hitResult: HitResult, plane: Plane, motionEvent: MotionEvent) {
         if (testRenderable == null) {
-            Log.d("AR", "testRenderable == null")
+            Log.d(tag, "testRenderable == null")
             return
         }
         val anchor = hitResult!!.createAnchor()
@@ -89,7 +88,7 @@ class FurnitureArActivity : AppCompatActivity() {
     }
 
     private fun removeObj(nodeToRemove: TransformableNode, motionEv: MotionEvent?) {
-        Log.d("spinner", "MotionEvent: $motionEv")
+        Log.d(tag, "MotionEvent: $motionEv")
 
         when (remove_button.visibility) {
             View.VISIBLE -> remove_button.visibility = View.GONE
@@ -117,7 +116,7 @@ class FurnitureArActivity : AppCompatActivity() {
     private fun renderModel(key: String) {
         // furniture.src[key] palauttaa tiedostonimen
         val modelUri = Uri.parse(furniture.src[key])
-        Log.d("spinner", "rendering model: $modelUri")
+        Log.d(tag, "rendering model: $modelUri")
 
         val renderableFuture = ModelRenderable.builder()
             .setSource(
@@ -144,16 +143,16 @@ class FurnitureArActivity : AppCompatActivity() {
     /** Spinner methods, translated these to ListView since couldn't get spinner to work properly */
     /*
     private fun initSpinner() {
-        Log.d("spinner", "initSpinner")
+        Log.d(tag, "initSpinner")
         ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
             colorArray
         ).also { adapter ->
-            Log.d("spinner", "adapter")
+            Log.d(tag, "adapter")
             // Specify the layout
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            Log.d("spinner", "adapter 2")
+            Log.d(tag, "adapter 2")
             // Apply the adapter to the spinner
             color_picker.adapter = adapter
         }
@@ -166,13 +165,13 @@ class FurnitureArActivity : AppCompatActivity() {
     override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
         // An item was selected. You can retrieve the selected item using
         val key = parent.getItemAtPosition(pos).toString()
-        Log.d("spinner", "Item selected: ${key}")
+        Log.d(tag, "Item selected: ${key}")
 
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) {
         // Another interface callback
-        Log.d("spinner", "Nothing selected, ${parent}")
+        Log.d(tag, "Nothing selected, ${parent}")
     }
     */
 }

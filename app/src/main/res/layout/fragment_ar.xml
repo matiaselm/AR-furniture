@@ -19,8 +19,8 @@
 
     <ListView
         android:id="@+id/color_picker_list"
-        android:layout_height="200dp"
-        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_width="50dp"
         android:layout_gravity="top|end"
         android:layout_margin="12dp"
         />
@@ -31,8 +31,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start|top"
         android:drawableStart="@drawable/abc_vector_test"
-        android:textColor="#FFFFFF"
-        android:backgroundTint="#99000000"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/blackGlass"
         android:layout_margin="12dp"
         android:contentDescription="@string/back_btn_desc"
         android:text="@string/back_btn_content"
