@@ -28,6 +28,30 @@ class FurnitureArActivity : AppCompatActivity() {
     private var colorArray = ArrayList<String>()
     private var key = "musta"
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.fragment_ar)
+
+        val b = this.intent.extras
+        if (b != null) {
+            furniture = b.getSerializable("furn") as Furniture
+            initColorArray(furniture)
+        }
+
+        arFragment = supportFragmentManager.findFragmentById(R.id.furniture_fragment) as ArFragment
+
+        renderModel(key)
+        initListView()
+
+        arFragment.setOnTapArPlaneListener { hitResult: HitResult, plane: Plane, motionEvent: MotionEvent ->
+            addObj(hitResult, plane, motionEvent)
+        }
+
+        back_button.setOnClickListener {
+            goBack()
+        }
+    }
+
     private fun initListView() {
         val listAdapter = CustomListAdapter(this, colorArray)
         color_picker_list.adapter = listAdapter
@@ -90,6 +114,33 @@ class FurnitureArActivity : AppCompatActivity() {
         finish()
     }
 
+    private fun renderModel(key: String) {
+        // furniture.src[key] palauttaa tiedostonimen
+        val modelUri = Uri.parse(furniture.src[key])
+        Log.d("spinner", "rendering model: $modelUri")
+
+        val renderableFuture = ModelRenderable.builder()
+            .setSource(
+                currentContext, RenderableSource.builder().setSource(
+                    currentContext,
+                    modelUri,
+                    RenderableSource.SourceType.GLTF2
+                )
+                    .setScale(0.1f)
+                    .setRecenterMode(RenderableSource.RecenterMode.ROOT)
+                    .build()
+            )
+            .setRegistryId(key)
+            .build()
+
+        renderableFuture.thenAccept { it -> testRenderable = it }
+
+        renderableFuture.exceptionally { throwable ->
+            Toast.makeText(currentContext, "Unable to create renderable", Toast.LENGTH_SHORT).show()
+            null
+        }
+    }
+
     /** Spinner methods, translated these to ListView since couldn't get spinner to work properly */
     /*
     private fun initSpinner() {
@@ -124,56 +175,4 @@ class FurnitureArActivity : AppCompatActivity() {
         Log.d("spinner", "Nothing selected, ${parent}")
     }
     */
-
-    private fun renderModel(key: String) {
-        // furniture.src[key] palauttaa tiedostonimen
-        val modelUri = Uri.parse(furniture.src[key])
-        Log.d("spinner", "rendering model: $modelUri")
-
-        val renderableFuture = ModelRenderable.builder()
-            .setSource(
-                currentContext, RenderableSource.builder().setSource(
-                    currentContext,
-                    modelUri,
-                    RenderableSource.SourceType.GLTF2
-                )
-                    .setScale(0.1f)
-                    .setRecenterMode(RenderableSource.RecenterMode.ROOT)
-                    .build()
-            )
-            .setRegistryId(key)
-            .build()
-
-        renderableFuture.thenAccept { it -> testRenderable = it }
-
-        renderableFuture.exceptionally { throwable ->
-            Toast.makeText(currentContext, "Unable to create renderable", Toast.LENGTH_SHORT).show()
-            null
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_ar)
-
-        val b = this.intent.extras
-        if (b != null) {
-            furniture = b.getSerializable("furn") as Furniture
-            initColorArray(furniture)
-        }
-
-        arFragment = supportFragmentManager.findFragmentById(R.id.furniture_fragment) as ArFragment
-
-        renderModel(key)
-        initListView()
-
-        arFragment.setOnTapArPlaneListener { hitResult: HitResult, plane: Plane, motionEvent: MotionEvent ->
-            addObj(hitResult, plane, motionEvent)
-        }
-
-        back_button.setOnClickListener {
-            goBack()
-        }
-    }
-
 }
