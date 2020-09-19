@@ -32,6 +32,19 @@
         android:text="@string/back_btn_content"
         tools:ignore="PrivateResource" />
 
+    <Button
+        android:id="@+id/remove_button"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_gravity="center|bottom"
+        android:layout_margin="16dp"
+        android:textSize="22dp"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#99FF0000"
+        android:contentDescription="@string/remove_btn_desc"
+        android:text="@string/remove_btn_content" />
+
 
 </FrameLayout>
 

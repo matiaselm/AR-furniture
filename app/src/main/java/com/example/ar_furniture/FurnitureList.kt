@@ -9,8 +9,8 @@ object FurnitureList {
         chairColors.put("musta", "rock.gltf")
         chairColors.put("valkoinen", "rock.gltf")
 
-        benchColors.put("musta", "euroshopper.gltf")
-        benchColors.put("valkoinen", "euroshopper.gltf")
+        benchColors.put("musta", "euroshopperMusta.gltf")
+        benchColors.put("valkoinen", "euroshopperValkoinen.gltf")
 
 
 
