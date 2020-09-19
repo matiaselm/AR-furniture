@@ -71,9 +71,8 @@ class FurnitureArActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_ar)
 
-        colorArray.add("green")
-        colorArray.add("blue")
-        colorArray.add("red")
+        colorArray.add("musta")
+        colorArray.add("valkoinen")
 
         val b = this.intent.extras
         if (b != null) {
