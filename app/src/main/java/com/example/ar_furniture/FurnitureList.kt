@@ -10,10 +10,10 @@ object FurnitureList {
     val benchColors = HashMap<String, String>()
 
     init{
-        chairColors.put("musta", "rock.gltf")
+        chairColors.put("musta", "barstool.gltf")
         chairColors.put("valkoinen", "rock.gltf")
 
-        benchColors.put("musta", "euroshopperMusta.gltf")
+        benchColors.put("musta", "chair.gltf")
         benchColors.put("punainen", "euroshopper.gltf")
         benchColors.put("valkoinen", "euroshopperValkoinen.gltf")
 
