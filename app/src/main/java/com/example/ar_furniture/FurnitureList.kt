@@ -12,14 +12,14 @@ object FurnitureList {
     val chairColors = HashMap<String, String>()
 
     init{
-        rockColors.put("musta", "rock.gltf")
+        rockColors.put("default", "rock.gltf")
         rockColors.put("valkoinen", "rock.gltf")
 
-        barstoolColors.put("musta","barstool.gltf")
-        chairColors.put("musta","chair.gltf")
+        barstoolColors.put("default","barstool.gltf")
+        chairColors.put("default","chair.gltf")
 
         euroshopperColors.put("musta", "euroshopperMusta.gltf")
-        euroshopperColors.put("punainen", "euroshopper.gltf")
+        euroshopperColors.put("default", "euroshopper.gltf")
         euroshopperColors.put("valkoinen", "euroshopperValkoinen.gltf")
 
         lista.add(Furniture("graniitti", "kivi", rockColors))
