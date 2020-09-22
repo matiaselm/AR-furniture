@@ -29,7 +29,10 @@ class CustomListAdapter(private val context: Activity, private val imgid: ArrayL
             "musta" -> rowView.color_box.setBackgroundColor(Color.BLACK)
             "punainen" -> rowView.color_box.setBackgroundColor(Color.RED)
             "harmaa" -> rowView.color_box.setBackgroundColor(Color.GRAY)
-            else -> rowView.color_box.setBackgroundColor(Color.BLACK)
+            else -> {
+                rowView.color_box.visibility = View.GONE
+                rowView.color_info.text = "default"
+            }
         }
 
         return rowView
