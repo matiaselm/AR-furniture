@@ -6,24 +6,18 @@ class Furniture(var name: String, var type: String,var src: HashMap<String, Stri
 
 object FurnitureList {
     val lista = ArrayList<Furniture>()
-    val rockColors = HashMap<String, String>()
-    val euroshopperColors = HashMap<String, String>()
     val barstoolColors = HashMap<String, String>()
     val chairColors = HashMap<String, String>()
 
     init{
-        rockColors.put("musta", "rock.gltf")
-        rockColors.put("valkoinen", "rock.gltf")
+        barstoolColors.put("default","barstool/barstool.gltf")
+        barstoolColors.put("musta","barstool/barstoolMusta.gltf")
+        barstoolColors.put("valkoinen","barstool/barstoolValkoinen.gltf")
 
-        barstoolColors.put("musta","barstool.gltf")
-        chairColors.put("musta","chair.gltf")
+        chairColors.put("default","chair/chair.gltf")
+        chairColors.put("musta","chair/chairMusta.gltf")
+        chairColors.put("valkoinen","chair/chairValkoinen.gltf")
 
-        euroshopperColors.put("musta", "euroshopperMusta.gltf")
-        euroshopperColors.put("punainen", "euroshopper.gltf")
-        euroshopperColors.put("valkoinen", "euroshopperValkoinen.gltf")
-
-        lista.add(Furniture("graniitti", "kivi", rockColors))
-        lista.add(Furniture("es", "euroshopper", euroshopperColors))
         lista.add(Furniture("chair", "chair", chairColors))
         lista.add(Furniture("barstool", "stool", barstoolColors))
     }
