@@ -48,6 +48,8 @@ class FurnitureArActivity : AppCompatActivity() {
             addObj(hitResult, plane, motionEvent)
         }
 
+        renderModel("default")
+
         back_button.setOnClickListener {
             goBack()
         }
